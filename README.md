@@ -1,8 +1,15 @@
-# GEO-SEO Claude Code Skill
+<p align="center">
+  <img src="assets/banner.svg" alt="GEO-SEO Claude Code Skill" width="900"/>
+</p>
 
-> **GEO-first, SEO-supported.** Optimize websites for AI-powered search engines (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) while maintaining traditional SEO foundations.
+<p align="center">
+  <strong>GEO-first, SEO-supported.</strong> Optimize websites for AI-powered search engines<br/>
+  (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) while maintaining traditional SEO foundations.
+</p>
 
-AI search is eating traditional search. This tool optimizes for where traffic is going, not where it was.
+<p align="center">
+  AI search is eating traditional search. This tool optimizes for where traffic is going, not where it was.
+</p>
 
 ---
 
