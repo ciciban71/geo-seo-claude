@@ -13,6 +13,12 @@ AGENTS_DIR="${CLAUDE_DIR}/agents"
 INSTALL_DIR="${SKILLS_DIR}/geo"
 TEMP_DIR=$(mktemp -d)
 
+# Detect if running via curl pipe (no interactive input available)
+INTERACTIVE=true
+if [ ! -t 0 ]; then
+    INTERACTIVE=false
+fi
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -70,9 +76,13 @@ main() {
     if command -v python3 &> /dev/null; then
         PYTHON_CMD="python3"
     elif command -v python &> /dev/null; then
-        PYTHON_VERSION=$(python --version 2>&1 | grep -oP '\d+\.\d+')
-        if [[ $(echo "$PYTHON_VERSION >= 3.8" | bc -l 2>/dev/null || echo "0") == "1" ]]; then
-            PYTHON_CMD="python"
+        PYTHON_VERSION=$(python --version 2>&1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
+        if [ -n "$PYTHON_VERSION" ]; then
+            MAJOR=$(echo "$PYTHON_VERSION" | cut -d. -f1)
+            MINOR=$(echo "$PYTHON_VERSION" | cut -d. -f2)
+            if [ "$MAJOR" -ge 3 ] && [ "$MINOR" -ge 8 ]; then
+                PYTHON_CMD="python"
+            fi
         fi
     fi
 
@@ -89,10 +99,14 @@ main() {
         echo "  This tool requires Claude Code to function."
         echo "  Install: npm install -g @anthropic-ai/claude-code"
         echo ""
-        read -p "Continue installation anyway? (y/n): " -n 1 -r
-        echo ""
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            exit 1
+        if [ "$INTERACTIVE" = true ]; then
+            read -p "Continue installation anyway? (y/n): " -n 1 -r
+            echo ""
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                exit 1
+            fi
+        else
+            print_info "Non-interactive mode — continuing anyway..."
         fi
     else
         print_success "Claude Code CLI found"
@@ -114,17 +128,20 @@ main() {
     print_info "Fetching GEO-SEO skill files..."
 
     # Check if running from the repo directory (local install)
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    # BASH_SOURCE may be empty when piped via curl, so handle gracefully
+    SCRIPT_DIR=""
+    if [ -n "${BASH_SOURCE[0]:-}" ] && [ "${BASH_SOURCE[0]}" != "bash" ]; then
+        SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)" || true
+    fi
 
-    if [ -f "$SCRIPT_DIR/geo/SKILL.md" ]; then
+    if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/geo/SKILL.md" ]; then
         print_info "Installing from local directory..."
         SOURCE_DIR="$SCRIPT_DIR"
     else
         print_info "Cloning from repository..."
-        git clone --depth 1 "$REPO_URL" "$TEMP_DIR/repo" 2>/dev/null || {
-            print_error "Failed to clone repository."
-            echo "  Trying local installation instead..."
-            SOURCE_DIR="$SCRIPT_DIR"
+        git clone --depth 1 "$REPO_URL" "$TEMP_DIR/repo" || {
+            print_error "Failed to clone repository. Check your internet connection."
+            exit 1
         }
         SOURCE_DIR="${TEMP_DIR}/repo"
     fi
@@ -197,22 +214,26 @@ main() {
             print_success "Python dependencies installed"
         } || {
             print_warning "Some Python dependencies failed to install."
-            echo "  Run manually: $PYTHON_CMD -m pip install -r $INSTALL_DIR/requirements.txt"
+            echo "  Run manually: $PYTHON_CMD -m pip install -r requirements.txt"
             cp "$SOURCE_DIR/requirements.txt" "$INSTALL_DIR/"
         }
     fi
 
     # ---- Optional: Install Playwright ----
-    echo ""
-    read -p "Install Playwright for screenshots? (y/n): " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        print_info "Installing Playwright browsers..."
-        $PYTHON_CMD -m playwright install chromium 2>/dev/null && {
-            print_success "Playwright Chromium installed"
-        } || {
-            print_warning "Playwright installation failed. Screenshots won't be available."
-        }
+    if [ "$INTERACTIVE" = true ]; then
+        echo ""
+        read -p "Install Playwright for screenshots? (y/n): " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            print_info "Installing Playwright browsers..."
+            $PYTHON_CMD -m playwright install chromium 2>/dev/null && {
+                print_success "Playwright Chromium installed"
+            } || {
+                print_warning "Playwright installation failed. Screenshots won't be available."
+            }
+        fi
+    else
+        print_info "Skipping Playwright (non-interactive mode). Install later with: python3 -m playwright install chromium"
     fi
 
     # ---- Verify Installation ----
