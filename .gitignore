@@ -14,6 +14,8 @@ venv/
 env/
 .venv/
 .env/
+.env
+.env.*
 
 # IDE
 .vscode/
@@ -26,10 +28,21 @@ env/
 # Logs
 *.log
 
-# Output files (generated reports - only in working directory)
+# Output files (generated reports - may contain sensitive client data)
 /GEO-*.md
+/GEO-*.pdf
+*.pdf
 /llms.txt
 /llms-full.txt
+/audit-data*.json
+
+# Credentials and secrets (never commit these)
+*.key
+*.pem
+*.p12
+*.secret
+*.token
+credentials.*
 
 # Screenshots
 screenshots/

@@ -866,7 +866,7 @@ if __name__ == "__main__":
             },
         }
 
-        output_file = sys.argv[1] if len(sys.argv) > 1 else "GEO-REPORT.pdf"
+        output_file = "GEO-REPORT-sample.pdf"
         result = generate_report(sample_data, output_file)
         print(f"Report generated: {result}")
 
