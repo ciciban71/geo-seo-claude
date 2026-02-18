@@ -148,34 +148,20 @@
   <!-- "for Claude Code" line -->
   <text x="40" y="272" font-family="'Courier New', monospace" font-size="13" fill="#636e72" letter-spacing="0.5">for Claude Code</text>
 
-  <!-- Right side: Commands list -->
-  <g font-family="'Courier New', monospace" font-size="14.5" text-anchor="end">
-    <text x="855" y="62" fill="#e94560">/audit</text>
-    <text x="855" y="62" fill="#8892b0" dx="-42"> &lt;url&gt;</text>
-
-    <text x="855" y="90" fill="#e94560">/crawlers</text>
-    <text x="855" y="90" fill="#8892b0" dx="-68"> &lt;url&gt;</text>
-
-    <text x="855" y="118" fill="#e94560">/citability</text>
-    <text x="855" y="118" fill="#8892b0" dx="-80"> &lt;url&gt;</text>
-
-    <text x="855" y="146" fill="#e94560">/schema</text>
-    <text x="855" y="146" fill="#8892b0" dx="-53"> &lt;url&gt;</text>
-
-    <text x="855" y="174" fill="#e94560">/brands</text>
-    <text x="855" y="174" fill="#8892b0" dx="-53"> &lt;url&gt;</text>
-
-    <text x="855" y="202" fill="#e94560">/platforms</text>
-    <text x="855" y="202" fill="#8892b0" dx="-73"> &lt;url&gt;</text>
-
-    <text x="855" y="230" fill="#e94560">/report</text>
-    <text x="855" y="230" fill="#8892b0" dx="-51"> &lt;url&gt;</text>
-
-    <text x="855" y="258" fill="#e94560">/report-pdf</text>
-  </g>
-
   <!-- Vertical accent line separating left and right -->
-  <rect x="520" y="40" width="2" height="230" fill="#0f3460" opacity="0.4" rx="1"/>
+  <rect x="480" y="40" width="2" height="230" fill="#0f3460" opacity="0.4" rx="1"/>
+
+  <!-- Right side: Commands list — each line is a single text element -->
+  <g font-family="'Courier New', monospace" font-size="14" text-anchor="end">
+    <text x="855" y="60"><tspan fill="#e94560">/audit </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="88"><tspan fill="#e94560">/crawlers </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="116"><tspan fill="#e94560">/citability </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="144"><tspan fill="#e94560">/schema </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="172"><tspan fill="#e94560">/brands </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="200"><tspan fill="#e94560">/platforms </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="228"><tspan fill="#e94560">/report </tspan><tspan fill="#636e72">&lt;url&gt;</tspan></text>
+    <text x="855" y="256"><tspan fill="#e94560">/report-pdf</tspan></text>
+  </g>
 
   <!-- Bottom bar -->
   <rect x="0" y="295" width="900" height="25" fill="#0f3460" opacity="0.3"/>
