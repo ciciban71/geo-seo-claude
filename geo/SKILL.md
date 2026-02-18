@@ -34,6 +34,7 @@ allowed-tools: Read, Grep, Glob, Bash, WebFetch, Write
 | `/geo technical <url>` | Traditional technical SEO audit |
 | `/geo content <url>` | Content quality and E-E-A-T assessment |
 | `/geo report <url>` | Generate client-ready GEO deliverable |
+| `/geo report-pdf <url>` | Generate professional PDF report with charts and scores |
 | `/geo quick <url>` | 60-second GEO visibility snapshot |
 
 ---
@@ -157,7 +158,34 @@ All commands generate structured output:
 | `/geo technical` | `GEO-TECHNICAL-AUDIT.md` |
 | `/geo content` | `GEO-CONTENT-ANALYSIS.md` |
 | `/geo report` | `GEO-CLIENT-REPORT.md` (presentation-ready) |
+| `/geo report-pdf` | `GEO-REPORT.pdf` (professional PDF with charts) |
 | `/geo quick` | Inline summary (no file) |
+
+---
+
+## PDF Report Generation
+
+The `/geo report-pdf <url>` command generates a professional, branded PDF report:
+
+### How It Works
+1. Run the full audit or individual analyses first
+2. Collect all scores and findings into a JSON structure
+3. Execute the PDF generator: `python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py data.json GEO-REPORT.pdf`
+
+### What the PDF Includes
+- **Cover page** with GEO score gauge visualization
+- **Score breakdown** with color-coded bar charts
+- **AI Platform Readiness** dashboard with horizontal bar chart
+- **Crawler Access** status table with color-coded Allow/Block
+- **Key Findings** categorized by severity (Critical/High/Medium/Low)
+- **Prioritized Action Plan** (Quick Wins, Medium-Term, Strategic)
+- **Methodology & Glossary** appendix
+
+### Workflow
+1. First run `/geo audit <url>` to collect all data
+2. Then run `/geo report-pdf <url>` to generate the PDF
+3. The tool will compile audit data into JSON, then generate the PDF
+4. Output: `GEO-REPORT.pdf` in the current directory
 
 ---
 
