@@ -192,6 +192,22 @@ rm -rf ~/.claude/skills/geo ~/.claude/skills/geo-* ~/.claude/agents/geo-*.md
 
 ---
 
+## Want to Turn This Into a Business?
+
+The tool is free. Learning how to monetize it is where the community comes in.
+
+**[Join the AI Workshop Community →](https://skool.com/aiworkshop)**
+
+Inside you'll get:
+- **Video walkthroughs** — Step-by-step setup, running audits, reading results
+- **Client acquisition playbook** — How to find prospects, pitch GEO services, and close deals
+- **Live office hours** — Bring your audit results, get direct help
+- **GEO agency pricing & templates** — Proposal docs, cold outreach scripts, onboarding workflows
+
+GEO agencies charge $2K–$12K/month. This tool does the audit. The community teaches you how to sell it.
+
+---
+
 ## License
 
 MIT License
