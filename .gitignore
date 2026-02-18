@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Output files (generated reports - only in working directory)
+/GEO-*.md
+/llms.txt
+/llms-full.txt
+
+# Screenshots
+screenshots/
+*.png
+*.jpg
+*.jpeg
+!schema/*.json
+
+# Test files
+test_output/
+.pytest_cache/
+
+# OS
+Thumbs.db
+.DS_Store
