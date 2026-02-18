@@ -24,13 +24,13 @@ AI search is eating traditional search. This tool optimizes for where traffic is
 ### One-Command Install (macOS/Linux)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOURUSERNAME/geo-seo-claude/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/zubair-trabzada/geo-seo-claude/main/install.sh | bash
 ```
 
 ### Manual Install
 
 ```bash
-git clone https://github.com/YOURUSERNAME/geo-seo-claude.git
+git clone https://github.com/zubair-trabzada/geo-seo-claude.git
 cd geo-seo-claude
 ./install.sh
 ```
@@ -61,6 +61,7 @@ Open Claude Code and use these commands:
 | `/geo technical <url>` | Technical SEO audit |
 | `/geo content <url>` | Content quality & E-E-A-T assessment |
 | `/geo report <url>` | Generate client-ready GEO report |
+| `/geo report-pdf` | Generate professional PDF report with charts & visualizations |
 
 ---
 
@@ -70,7 +71,7 @@ Open Claude Code and use these commands:
 geo-seo-claude/
 ├── geo/                          # Main skill orchestrator
 │   └── SKILL.md                  # Primary skill file with commands & routing
-├── skills/                       # 10 specialized sub-skills
+├── skills/                       # 11 specialized sub-skills
 │   ├── geo-audit/                # Full audit orchestration & scoring
 │   ├── geo-citability/           # AI citation readiness scoring
 │   ├── geo-crawlers/             # AI crawler access analysis
@@ -80,7 +81,8 @@ geo-seo-claude/
 │   ├── geo-schema/               # Structured data for AI discoverability
 │   ├── geo-technical/            # Technical SEO foundations
 │   ├── geo-content/              # Content quality & E-E-A-T
-│   └── geo-report/               # Client-ready deliverable generation
+│   ├── geo-report/               # Client-ready markdown report generation
+│   └── geo-report-pdf/           # Professional PDF report with charts
 ├── agents/                       # 5 parallel subagents
 │   ├── geo-ai-visibility.md      # GEO audit, citability, crawlers, brands
 │   ├── geo-platform-analysis.md  # Platform-specific optimization
@@ -91,7 +93,8 @@ geo-seo-claude/
 │   ├── fetch_page.py             # Page fetching & parsing
 │   ├── citability_scorer.py      # AI citability scoring engine
 │   ├── brand_scanner.py          # Brand mention detection
-│   └── llmstxt_generator.py      # llms.txt validation & generation
+│   ├── llmstxt_generator.py      # llms.txt validation & generation
+│   └── generate_pdf_report.py    # PDF report generator (ReportLab)
 ├── schema/                       # JSON-LD templates
 │   ├── organization.json         # Organization schema (with sameAs)
 │   ├── local-business.json       # LocalBusiness schema
@@ -154,7 +157,7 @@ Only 11% of domains are cited by both ChatGPT and Google AI Overviews for the sa
 Generates the emerging llms.txt standard file that helps AI crawlers understand your site structure.
 
 ### Client-Ready Reports
-Generates professional GEO reports ready to deliver to clients, complete with scores, action plans, and ROI framing.
+Generates professional GEO reports in markdown or PDF format. PDF reports include score gauges, bar charts, platform readiness visualizations, color-coded tables, and prioritized action plans — ready to deliver to clients.
 
 ---
 
