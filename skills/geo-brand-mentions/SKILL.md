@@ -238,11 +238,44 @@ For each platform, use WebFetch to search and assess presence:
 4. Check: `reddit.com/user/[brand-name]` for official account
 5. Note: Thread count, dominant subreddits, sentiment (positive/negative/neutral), recommendation frequency
 
-**Wikipedia Check:**
+**Wikipedia Check (IMPORTANT — use BOTH methods to avoid false negatives):**
+
+**Method 1 — Python API check (MOST RELIABLE, do this FIRST):**
+```bash
+python3 -c "
+import requests, json
+from urllib.parse import quote_plus
+brand = '[Brand_Name]'
+# Check Wikipedia API directly
+api_url = f'https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={quote_plus(brand)}&format=json'
+r = requests.get(api_url, headers={'User-Agent': 'GEO-Audit/1.0'}, timeout=15)
+data = r.json()
+results = data.get('query', {}).get('search', [])
+if results and brand.lower() in results[0].get('title', '').lower():
+    print(f'WIKIPEDIA PAGE EXISTS: {results[0][\"title\"]}')
+    print(f'URL: https://en.wikipedia.org/wiki/{results[0][\"title\"].replace(\" \", \"_\")}')
+else:
+    print('No direct Wikipedia page found')
+# Check Wikidata
+wd_url = f'https://www.wikidata.org/w/api.php?action=wbsearchentities&search={quote_plus(brand)}&language=en&format=json'
+r2 = requests.get(wd_url, headers={'User-Agent': 'GEO-Audit/1.0'}, timeout=15)
+wd = r2.json()
+entities = wd.get('search', [])
+if entities:
+    print(f'WIKIDATA ENTRY: {entities[0].get(\"id\", \"\")} — {entities[0].get(\"description\", \"\")}')
+"
+```
+
+**Method 2 — Direct URL check (backup verification):**
+1. WebFetch: `https://en.wikipedia.org/wiki/[Brand_Name]` — check if the page loads (not a redirect to search)
+2. WebFetch: `https://en.wikipedia.org/wiki/[Founder_Name]` for founder article
+
+**Method 3 — Search (least reliable, use only for supplemental info):**
 1. Search: `[brand name] site:wikipedia.org`
 2. Search: `[brand name] site:wikidata.org`
-3. Check: `en.wikipedia.org/wiki/[Brand_Name]` for direct article
-4. Check: `en.wikipedia.org/wiki/[Founder_Name]` for founder article
+
+**CRITICAL:** Web search alone is NOT reliable for determining Wikipedia presence. ALWAYS run the Python API check first. If the API says a page exists, it exists — do not override this with a search result that fails to find it.
+
 5. Note: Article existence, quality, edit history, Wikidata completeness
 
 **LinkedIn Check:**

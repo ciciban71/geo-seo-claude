@@ -110,7 +110,21 @@ Search for the brand/site name across platforms frequently cited by AI models:
 
 1. **YouTube**: Use WebFetch to search `site:youtube.com "brand name"` patterns. Check for official channel presence, video count, and engagement.
 2. **Reddit**: Search for brand mentions on Reddit. Check discussion sentiment, subreddit presence, and mention recency.
-3. **Wikipedia**: Check if the brand has a Wikipedia article or is mentioned in relevant articles. This is the single strongest signal for entity recognition by AI models.
+3. **Wikipedia (CRITICAL — use API check, not just web search)**:
+   - **FIRST**, run the Wikipedia API directly via Bash to check definitively:
+     ```bash
+     python3 -c "
+     import requests; from urllib.parse import quote_plus
+     brand='[BRAND_NAME]'
+     r=requests.get(f'https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={quote_plus(brand)}&format=json', headers={'User-Agent':'GEO-Audit/1.0'}, timeout=15)
+     results=r.json().get('query',{}).get('search',[])
+     if results and brand.lower() in results[0].get('title','').lower(): print(f'FOUND: https://en.wikipedia.org/wiki/{results[0][\"title\"].replace(\" \",\"_\")}')
+     else: print('NOT FOUND')
+     "
+     ```
+   - **SECOND**, try WebFetch on `https://en.wikipedia.org/wiki/[Brand_Name]` directly to verify.
+   - **DO NOT** rely solely on web search (`site:wikipedia.org`) — it frequently returns false negatives.
+   - This is the single strongest signal for entity recognition by AI models.
 4. **LinkedIn**: Check for company page presence and completeness.
 5. **Industry/Niche Sources**: Search for the brand on authoritative industry sites, review platforms (G2, Trustpilot, Capterra), and news outlets.
 
