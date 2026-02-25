@@ -239,7 +239,9 @@ Only **11% of domains** are cited by BOTH ChatGPT and Google AI Overviews for th
 
 ## Output Format
 
-Generate **GEO-PLATFORM-OPTIMIZATION.md** with the following structure:
+Generate **`clients/{client_slug}/GEO-PLATFORM-OPTIMIZATION.md`** where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+The file should have the following structure:
 
 ```markdown
 # GEO Platform Optimization Report — [Domain]

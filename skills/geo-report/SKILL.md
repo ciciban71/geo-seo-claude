@@ -15,16 +15,16 @@ This skill aggregates outputs from all GEO audit skills into a single, professio
 ## How to Use This Skill
 
 1. Run the following audits first (or use existing report data):
-   - `geo-platform-optimizer` -> GEO-PLATFORM-OPTIMIZATION.md
-   - `geo-schema` -> GEO-SCHEMA-REPORT.md
-   - `geo-technical` -> GEO-TECHNICAL-AUDIT.md
-   - `geo-content` -> GEO-CONTENT-ANALYSIS.md
+   - `geo-platform-optimizer` -> `clients/{client_slug}/GEO-PLATFORM-OPTIMIZATION.md`
+   - `geo-schema` -> `clients/{client_slug}/GEO-SCHEMA-REPORT.md`
+   - `geo-technical` -> `clients/{client_slug}/GEO-TECHNICAL-AUDIT.md`
+   - `geo-content` -> `clients/{client_slug}/GEO-CONTENT-ANALYSIS.md`
    - (Optional) `geo-llms-txt` -> llms.txt assessment
    - (Optional) `geo-brand-mentions` -> brand authority data
 2. Collect all scores and findings
 3. Calculate the composite GEO Readiness Score
 4. Generate the client report using the template below
-5. Output: GEO-CLIENT-REPORT.md
+5. Output: `clients/{client_slug}/GEO-CLIENT-REPORT.md`
 
 ---
 
@@ -391,7 +391,9 @@ Be conservative with estimates. State assumptions clearly. Never guarantee speci
 
 ## Output
 
-Generate **GEO-CLIENT-REPORT.md** using the complete template above, filled with actual audit data. The report should be:
+Generate **`clients/{client_slug}/GEO-CLIENT-REPORT.md`** where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+Use the complete template above, filled with actual audit data. The report should be:
 - 40-80 pages equivalent in detail (3,000-6,000 words)
 - Ready to send to a client without editing
 - Self-contained (no references to other report files — all relevant data is included)

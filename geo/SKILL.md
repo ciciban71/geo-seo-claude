@@ -34,8 +34,26 @@ allowed-tools: Read, Grep, Glob, Bash, WebFetch, Write
 | `/geo technical <url>` | Traditional technical SEO audit |
 | `/geo content <url>` | Content quality and E-E-A-T assessment |
 | `/geo report <url>` | Generate client-ready GEO deliverable |
-| `/geo report-pdf <url>` | Generate professional PDF report with charts and scores |
+| `/geo report-pdf <url> [--lang en\|ar\|sr]` | Generate professional PDF report with charts and scores |
 | `/geo quick <url>` | 60-second GEO visibility snapshot |
+
+---
+
+## Client Directory Convention
+
+All output files are organized under `clients/{domain}/` in the working directory.
+The domain slug is derived from the target URL:
+1. Strip protocol (https://, http://)
+2. Strip `www.` prefix
+3. Strip trailing paths and slashes
+4. Use the remaining domain as the folder name
+
+**Example:** `/geo audit https://www.example.com` → outputs to `clients/example.com/`
+
+Before writing any files, create the client directory:
+```bash
+mkdir -p clients/{slug}
+```
 
 ---
 
@@ -64,9 +82,11 @@ allowed-tools: Read, Grep, Glob, Bash, WebFetch, Write
 1. Fetch homepage HTML (curl or WebFetch)
 2. Detect business type (SaaS, Local, E-commerce, Publisher, Agency, Other)
 3. Extract key pages from sitemap.xml or internal links (up to 50 pages)
+4. Derive client slug from URL (strip protocol, strip `www.`, keep domain)
+5. Create client directory: `mkdir -p clients/{slug}`
 
 **Phase 2: Parallel Analysis (Delegate to Subagents)**
-Launch these 5 subagents simultaneously:
+Launch these 5 subagents simultaneously, passing the client slug (e.g., `clients/example.com/`) as context so all outputs are written to the correct client directory:
 
 | Subagent | File | Responsibility |
 |----------|------|---------------|
@@ -147,30 +167,37 @@ All commands generate structured output:
 
 | Command | Output File |
 |---------|------------|
-| `/geo audit` | `GEO-AUDIT-REPORT.md` |
-| `/geo page` | `GEO-PAGE-ANALYSIS.md` |
-| `/geo citability` | `GEO-CITABILITY-SCORE.md` |
-| `/geo crawlers` | `GEO-CRAWLER-ACCESS.md` |
-| `/geo llmstxt` | `llms.txt` (ready to deploy) |
-| `/geo brands` | `GEO-BRAND-MENTIONS.md` |
-| `/geo platforms` | `GEO-PLATFORM-OPTIMIZATION.md` |
-| `/geo schema` | `GEO-SCHEMA-REPORT.md` + generated JSON-LD |
-| `/geo technical` | `GEO-TECHNICAL-AUDIT.md` |
-| `/geo content` | `GEO-CONTENT-ANALYSIS.md` |
-| `/geo report` | `GEO-CLIENT-REPORT.md` (presentation-ready) |
-| `/geo report-pdf` | `GEO-REPORT.pdf` (professional PDF with charts) |
+| `/geo audit` | `clients/{slug}/GEO-AUDIT-REPORT.md` |
+| `/geo page` | `clients/{slug}/GEO-PAGE-ANALYSIS.md` |
+| `/geo citability` | `clients/{slug}/GEO-CITABILITY-SCORE.md` |
+| `/geo crawlers` | `clients/{slug}/GEO-CRAWLER-ACCESS.md` |
+| `/geo llmstxt` | `clients/{slug}/llms.txt` (ready to deploy) |
+| `/geo brands` | `clients/{slug}/GEO-BRAND-MENTIONS.md` |
+| `/geo platforms` | `clients/{slug}/GEO-PLATFORM-OPTIMIZATION.md` |
+| `/geo schema` | `clients/{slug}/GEO-SCHEMA-REPORT.md` + generated JSON-LD |
+| `/geo technical` | `clients/{slug}/GEO-TECHNICAL-AUDIT.md` |
+| `/geo content` | `clients/{slug}/GEO-CONTENT-ANALYSIS.md` |
+| `/geo report` | `clients/{slug}/GEO-CLIENT-REPORT.md` (presentation-ready) |
+| `/geo report-pdf` | `clients/{slug}/GEO-REPORT.pdf` (professional PDF with charts) |
 | `/geo quick` | Inline summary (no file) |
 
 ---
 
 ## PDF Report Generation
 
-The `/geo report-pdf <url>` command generates a professional, branded PDF report:
+The `/geo report-pdf <url> [--lang en|ar|sr]` command generates a professional, branded PDF report:
+
+### Supported Languages
+| Code | Language | Features |
+|------|----------|----------|
+| `en` | English (default) | Noto Sans font, LTR layout |
+| `ar` | Arabic | Amiri font, RTL layout, text reshaping, reversed table columns |
+| `sr` | Serbian Latin | Noto Sans font, LTR layout, full diacritic support (č, ć, đ, š, ž) |
 
 ### How It Works
 1. Run the full audit or individual analyses first
 2. Collect all scores and findings into a JSON structure
-3. Execute the PDF generator: `python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py data.json GEO-REPORT.pdf`
+3. Execute the PDF generator: `python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py data.json clients/{slug}/GEO-REPORT.pdf --lang en`
 
 ### What the PDF Includes
 - **Cover page** with GEO score gauge visualization
@@ -183,9 +210,9 @@ The `/geo report-pdf <url>` command generates a professional, branded PDF report
 
 ### Workflow
 1. First run `/geo audit <url>` to collect all data
-2. Then run `/geo report-pdf <url>` to generate the PDF
+2. Then run `/geo report-pdf <url> [--lang ar]` to generate the PDF
 3. The tool will compile audit data into JSON, then generate the PDF
-4. Output: `GEO-REPORT.pdf` in the current directory
+4. Output: `clients/{slug}/GEO-REPORT.pdf` in the client directory
 
 ---
 

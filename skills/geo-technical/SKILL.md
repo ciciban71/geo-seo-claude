@@ -404,7 +404,9 @@ ChatGPT uses Bing's index. Bing Copilot uses Bing's index. Faster Bing indexing 
 
 ## Output Format
 
-Generate **GEO-TECHNICAL-AUDIT.md** with:
+Generate **`clients/{client_slug}/GEO-TECHNICAL-AUDIT.md`** where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+The file should contain:
 
 ```markdown
 # GEO Technical SEO Audit — [Domain]

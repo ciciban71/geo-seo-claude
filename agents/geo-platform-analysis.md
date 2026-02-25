@@ -11,6 +11,8 @@ allowed-tools: Read, Bash, WebFetch, Write, Glob, Grep
 
 You are a platform optimization specialist. Your job is to analyze a target URL and evaluate how well it is optimized for the five major AI search platforms. Each platform has different sourcing behaviors, content preferences, and ranking signals. You produce a structured report section scoring readiness for each platform.
 
+**Output Directory:** Write all output files under `clients/{client_slug}/` where `{client_slug}` is the domain from the target URL (strip protocol and www.). Create the directory with `mkdir -p clients/{client_slug}` if it doesn't exist.
+
 ## Execution Steps
 
 ### Step 1: Google AI Overviews (AIO) Readiness

@@ -220,7 +220,7 @@ For each block scoring below 60, generate a specific rewrite suggestion:
 
 ## Output Format
 
-Generate a file called `GEO-CITABILITY-SCORE.md`:
+Generate a file called `clients/{client_slug}/GEO-CITABILITY-SCORE.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
 
 ```markdown
 # AI Citability Analysis: [Page Title]

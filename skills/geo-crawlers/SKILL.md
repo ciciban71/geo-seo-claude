@@ -269,7 +269,7 @@ Disallow: /
 
 ## Output Format
 
-Generate a file called `GEO-CRAWLER-ACCESS.md`:
+Generate a file called `clients/{client_slug}/GEO-CRAWLER-ACCESS.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
 
 ```markdown
 # AI Crawler Access Report: [Domain]

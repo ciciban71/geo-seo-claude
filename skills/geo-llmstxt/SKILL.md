@@ -354,7 +354,7 @@ Before outputting:
 
 ### For Analysis Mode
 
-Generate `GEO-LLMSTXT-ANALYSIS.md`:
+Generate `clients/{client_slug}/GEO-LLMSTXT-ANALYSIS.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
 
 ```markdown
 # llms.txt Analysis: [Domain]
@@ -410,7 +410,7 @@ These important pages were found on the site but not in llms.txt:
 
 ### For Generation Mode
 
-Output the complete `llms.txt` file content, ready to be saved to the site's root directory. Also output a brief `GEO-LLMSTXT-GENERATION.md` report explaining:
+Output the complete `clients/{client_slug}/llms.txt` file content, ready to be saved to the site's root directory. Also output a brief `clients/{client_slug}/GEO-LLMSTXT-GENERATION.md` report explaining:
 - How many pages were discovered and how many were selected
 - The prioritization rationale
 - Any pages that were borderline (might add later)

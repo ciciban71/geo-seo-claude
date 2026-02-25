@@ -188,7 +188,9 @@ Every issue found during the audit is classified by severity:
 
 ## Output Format
 
-Generate a file called `GEO-AUDIT-REPORT.md` with the following structure:
+Generate a file called `clients/{client_slug}/GEO-AUDIT-REPORT.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+The file should have the following structure:
 
 ```markdown
 # GEO Audit Report: [Site Name]

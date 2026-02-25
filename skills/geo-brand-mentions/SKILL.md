@@ -317,7 +317,7 @@ If competitors are identified, do a quick scan of their platform presence for co
 
 ## Output Format
 
-Generate a file called `GEO-BRAND-MENTIONS.md`:
+Generate a file called `clients/{client_slug}/GEO-BRAND-MENTIONS.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
 
 ```markdown
 # Brand Authority Report: [Brand Name]

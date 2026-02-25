@@ -326,7 +326,9 @@ Based on the detected business type, generate ready-to-paste JSON-LD blocks. Alw
 
 ## Output Format
 
-Generate **GEO-SCHEMA-REPORT.md** with:
+Generate **`clients/{client_slug}/GEO-SCHEMA-REPORT.md`** where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+The file should contain:
 
 ```markdown
 # GEO Schema & Structured Data Report — [Domain]

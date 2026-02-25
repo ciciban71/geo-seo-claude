@@ -15,8 +15,18 @@ This skill generates a professional, visually polished PDF report from GEO audit
 ## Prerequisites
 
 - **ReportLab** must be installed: `pip install reportlab`
+- **Arabic support** requires: `pip install arabic-reshaper python-bidi`
 - The PDF generation script is located at: `~/.claude/skills/geo/scripts/generate_pdf_report.py`
+- Bundled fonts at: `~/.claude/skills/geo/scripts/fonts/` (Noto Sans for en/sr, Amiri for ar)
 - Run a full GEO audit first (using `/geo-audit`) to have data to include in the report
+
+## Supported Languages
+
+| Code | Language | Font | Layout |
+|------|----------|------|--------|
+| `en` | English (default) | Noto Sans | LTR |
+| `ar` | Arabic | Amiri | RTL (reversed tables, right-aligned text, reshaped ligatures) |
+| `sr` | Serbian Latin | Noto Sans | LTR (full diacritic support: č, ć, đ, š, ž) |
 
 ## How to Generate a PDF Report
 
@@ -88,8 +98,10 @@ EOF
 Run the PDF generation script:
 
 ```bash
-python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json GEO-REPORT-[brand].pdf
+python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json "clients/{client_slug}/GEO-REPORT-[brand].pdf" --lang en
 ```
+
+Add `--lang ar` for Arabic or `--lang sr` for Serbian Latin.
 
 The script will produce a professional PDF report with:
 - **Cover Page** — Brand name, URL, date, overall GEO score with visual gauge
@@ -109,10 +121,10 @@ After generation, tell the user where the PDF was saved and its file size.
 
 When the user runs this skill, follow this exact sequence:
 
-1. **Check for existing audit data** — Look for recent GEO audit reports in the current directory:
-   - `GEO-CLIENT-REPORT.md`
-   - `GEO-AUDIT-REPORT.md`
-   - Or any `GEO-*.md` files from a recent audit
+1. **Check for existing audit data** — Look for recent GEO audit reports in the client directory (`clients/{client_slug}/`):
+   - `clients/{client_slug}/GEO-CLIENT-REPORT.md`
+   - `clients/{client_slug}/GEO-AUDIT-REPORT.md`
+   - Or any `clients/{client_slug}/GEO-*.md` files from a recent audit
 
 2. **If no audit data exists** — Tell the user to run `/geo-audit <url>` first, then come back for the PDF.
 
@@ -131,8 +143,9 @@ When the user runs this skill, follow this exact sequence:
 
 6. **Run the PDF generator**:
    ```bash
-   python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json "GEO-REPORT-[brand_name].pdf"
+   python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json "clients/{client_slug}/GEO-REPORT-[brand_name].pdf" --lang en
    ```
+   Use `--lang ar` for Arabic or `--lang sr` for Serbian Latin.
 
 7. **Report success** — Tell the user the PDF was generated, its location, and file size.
 

@@ -277,7 +277,9 @@ Topical authority measures whether a site comprehensively covers a topic rather 
 
 ## Output Format
 
-Generate **GEO-CONTENT-ANALYSIS.md** with:
+Generate **`clients/{client_slug}/GEO-CONTENT-ANALYSIS.md`** where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+
+The file should contain:
 
 ```markdown
 # GEO Content Quality & E-E-A-T Analysis — [Domain]
