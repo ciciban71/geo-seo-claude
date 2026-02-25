@@ -41,14 +41,15 @@ allowed-tools: Read, Grep, Glob, Bash, WebFetch, Write
 
 ## Client Directory Convention
 
-All output files are organized under `clients/{domain}/` in the working directory.
-The domain slug is derived from the target URL:
+All output files are organized under `clients/{name}/` in the working directory.
+The client slug is derived from the target URL:
 1. Strip protocol (https://, http://)
 2. Strip `www.` prefix
 3. Strip trailing paths and slashes
-4. Use the remaining domain as the folder name
+4. Strip the TLD (e.g., `.com`, `.rs`, `.co.uk`) — keep only the business name
 
-**Example:** `/geo audit https://www.example.com` → outputs to `clients/example.com/`
+**Example:** `/geo audit https://www.suncehotel.rs` → outputs to `clients/suncehotel/`
+**Example:** `/geo audit https://www.example.com` → outputs to `clients/example/`
 
 Before writing any files, create the client directory:
 ```bash
@@ -82,11 +83,11 @@ mkdir -p clients/{slug}
 1. Fetch homepage HTML (curl or WebFetch)
 2. Detect business type (SaaS, Local, E-commerce, Publisher, Agency, Other)
 3. Extract key pages from sitemap.xml or internal links (up to 50 pages)
-4. Derive client slug from URL (strip protocol, strip `www.`, keep domain)
+4. Derive client slug from URL (strip protocol, strip `www.`, strip TLD — keep only business name)
 5. Create client directory: `mkdir -p clients/{slug}`
 
 **Phase 2: Parallel Analysis (Delegate to Subagents)**
-Launch these 5 subagents simultaneously, passing the client slug (e.g., `clients/example.com/`) as context so all outputs are written to the correct client directory:
+Launch these 5 subagents simultaneously, passing the client slug (e.g., `clients/example/`) as context so all outputs are written to the correct client directory:
 
 | Subagent | File | Responsibility |
 |----------|------|---------------|

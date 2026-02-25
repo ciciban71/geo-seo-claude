@@ -354,7 +354,7 @@ Before outputting:
 
 ### For Analysis Mode
 
-Generate `clients/{client_slug}/GEO-LLMSTXT-ANALYSIS.md` where `{client_slug}` is the domain derived from the target URL (strip protocol, strip www., keep domain). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
+Generate `clients/{client_slug}/GEO-LLMSTXT-ANALYSIS.md` where `{client_slug}` is the business name derived from the target URL (strip protocol, strip www., strip TLD — keep only the business name, e.g. suncehotel.rs → suncehotel). Ensure the directory exists first: `mkdir -p clients/{client_slug}`
 
 ```markdown
 # llms.txt Analysis: [Domain]
